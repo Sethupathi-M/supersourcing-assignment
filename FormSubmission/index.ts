@@ -1,8 +1,8 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
-import FormFiller from "./entities/FormFiller";
 import config from "../config";
 import { formSelectorData } from "./constants/formSelectorData";
 import { formElementsData } from "./dummyData/formElementsData";
+import FormFiller from "./entities/FormFiller";
 
 const httpTrigger: AzureFunction = async function (
   context: Context,
