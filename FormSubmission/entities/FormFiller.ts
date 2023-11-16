@@ -1,11 +1,9 @@
 import { Context } from "@azure/functions";
 import { Browser, LaunchOptions, Page, chromium } from "playwright";
-import { FingerprintGenerator } from "fingerprint-generator";
-import { newInjectedContext } from "fingerprint-injector";
 import { IFormSelectorData } from "../types/formSelector.types";
-import { ScraperUtils } from "./Scraper.utils";
+import { FormFillerUtils } from "./FormFiller.utils";
 
-export default class Scraper {
+export default class FormFiller {
   context: Context;
   pageUrl: string;
 
@@ -15,7 +13,6 @@ export default class Scraper {
   }
 
   async openPage(page: Page): Promise<void> {
-    debugger;
     const pageUrl = this.pageUrl;
     await page.goto(pageUrl, { timeout: 0, waitUntil: "load" });
   }
@@ -57,20 +54,57 @@ export default class Scraper {
 
   async populateForm(
     page: Page,
-    formSelectorData: IFormSelectorData
+    formSelectorData: IFormSelectorData,
+    formElementsValue: any
   ): Promise<void> {
     for (const element of formSelectorData.formElementSelectors) {
-      if (element.type === "input") {
-        await ScraperUtils.typeText(page, element.selector, "test");
+      switch (element.type) {
+        case "checkbox":
+          await FormFillerUtils.selectCheckbox(page, element.selector);
+          break;
+
+        case "radio":
+          await FormFillerUtils.selectRadioBtn(
+            page,
+            element.selector,
+            formElementsValue[element.id]
+          );
+          break;
+
+        case "input":
+          await FormFillerUtils.typeText(
+            page,
+            element.selector,
+            formElementsValue[element.id]
+          );
+          break;
+
+        case "file":
+          await FormFillerUtils.setDummyFile(
+            page,
+            element.selector,
+            formElementsValue[element.id]
+          );
+          break;
+
+        default:
+          break;
       }
     }
   }
-  async isPagePopulated(page: Page): Promise<boolean> {
-    return false;
-  }
 
-  async populateSelectedProperty(page: Page) {
-    return null;
+  async submitForm(
+    page: Page,
+    submitBtnSelector: string
+  ): Promise<{ url: string; isSubmitted: boolean }> {
+    await page.click(submitBtnSelector);
+
+    const isSubmiited = await FormFillerUtils.isPageRedirected(
+      page,
+      "/submitted/",
+      10000
+    );
+    if (isSubmiited) return { isSubmitted: true, url: page.url() };
+    return { isSubmitted: false, url: page.url() };
   }
-  async submitForm(page: Page): Promise<void> {}
 }
