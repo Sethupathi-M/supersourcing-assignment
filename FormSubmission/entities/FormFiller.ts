@@ -28,7 +28,7 @@ export default class FormFiller {
     this.context.log(`slowMo: ${slowMo}`);
     try {
       let options: LaunchOptions = {
-        headless: false,
+        headless: true,
         slowMo: slowMo,
         args: [
           // `--headless=new`,
