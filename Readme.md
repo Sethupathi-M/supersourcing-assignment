@@ -8,6 +8,7 @@
 6. [x] Javascript or Typescript is used for the task.
 7. [ ] Hosted on AWS (optional and bonus if you do)
    - Tried to do it with Azure, but had few issues would take time. So skipped this.
+   - This was I was about to do, Create a Container Registry and Push the docker image. And from the azure function locate the container.
 8. [ ] Nest JS is used to write the application. (bonus - not compulsory)
    - Not used NestJs, so skipped this.
 
