@@ -9,7 +9,7 @@
 7. [ ] Hosted on AWS (optional and bonus if you do)
    - Tried to do it with Azure, but had few issues would take time. So skipped this.
 8. [ ] Nest JS is used to write the application. (bonus - not compulsory)
-   - Not just NestJs, so skipped this.
+   - Not used NestJs, so skipped this.
 
 # Run locally (docker not required)
 
