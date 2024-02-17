@@ -1,6 +1,6 @@
 export const formElementsData = {
-  name: "testing for git rebase",
-  email: "tester email also@gmail.com",
+  name: "new master rebase comment",
+  email: "newmasteremail@gmail.com",
   propertyName: "test",
   regNo: "12345678",
   ownerName: "test",
